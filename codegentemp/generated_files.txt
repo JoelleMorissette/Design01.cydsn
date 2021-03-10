@@ -14,6 +14,9 @@
   <file name="C:\Users\jmori\OneDrive\Bureau\Laboratoire 4\Design01.cydsn\codegentemp\cyfitter_gpio.h" value="HEADER;;;;;Pins and Interrupts" />
   <file name="C:\Users\jmori\OneDrive\Bureau\Laboratoire 4\Design01.cydsn\codegentemp\cyfitter_sysint.h" value="HEADER;;;;;Pins and Interrupts" />
   <file name="C:\Users\jmori\OneDrive\Bureau\Laboratoire 4\Design01.cydsn\codegentemp\cydisabledsheets.h" value="HEADER;;;;;" />
+  <file name="C:\Users\jmori\OneDrive\Bureau\Laboratoire 4\Design01.cydsn\codegentemp\UART_1.c" value="SOURCE_C;CortexM0p,CortexM4;;;;UART_1" />
+  <file name="C:\Users\jmori\OneDrive\Bureau\Laboratoire 4\Design01.cydsn\codegentemp\UART_1.h" value="HEADER;;;;;UART_1" />
+  <file name="C:\Users\jmori\OneDrive\Bureau\Laboratoire 4\Design01.cydsn\codegentemp\UART_1_SCBCLK.h" value="HEADER;;;;;UART_1_SCBCLK" />
   <file name="C:\Users\jmori\OneDrive\Bureau\Laboratoire 4\Design01.cydsn\codegentemp\project.h" value="OTHER;;;;;" />
   <file name="C:\Users\jmori\OneDrive\Bureau\Laboratoire 4\Design01.cydsn\codegentemp\cycodeshareimport.ld" value="OTHER;;;;;" />
   <file name="C:\Users\jmori\OneDrive\Bureau\Laboratoire 4\Design01.cydsn\codegentemp\cycodeshareexport.ld" value="OTHER;;;;;" />

@@ -1,10 +1,13 @@
 -- Project:   Design01
--- Generated: 03/10/2021 16:41:29
+-- Generated: 03/10/2021 17:28:33
 -- PSoC Creator  4.4
 
 ENTITY Design01 IS
     PORT(
-        Pin_1(0)_PAD : OUT std_ulogic);
+        Pin_1(0)_PAD : OUT std_ulogic;
+        \UART_1:tx(0)_PAD\ : OUT std_ulogic;
+        \UART_1:rx(0)_PAD\ : IN std_ulogic;
+        BOUTON(0)_PAD : IN std_ulogic);
     ATTRIBUTE voltage_VBACKUP OF __DEFAULT__ : ENTITY IS 3.3e0;
     ATTRIBUTE voltage_VDD_NS OF __DEFAULT__ : ENTITY IS 3.3e0;
     ATTRIBUTE voltage_VDDA_CSD OF __DEFAULT__ : ENTITY IS 3.3e0;
@@ -21,6 +24,7 @@ ENTITY Design01 IS
 END Design01;
 
 ARCHITECTURE __DEFAULT__ OF Design01 IS
+    SIGNAL BOUTON(0)__PA : bit;
     SIGNAL CPUSS_swj_swclk_tclk : bit;
     SIGNAL CPUSS_swj_swdio_tms : bit;
     SIGNAL CY_CPUSS_SWJ_SWCLK_TCLK(0)__PA : bit;
@@ -43,7 +47,18 @@ ARCHITECTURE __DEFAULT__ OF Design01 IS
     ATTRIBUTE global_signal OF ClockBlock_PeriClk : SIGNAL IS true;
     SIGNAL ClockBlock_SlowClk : bit;
     SIGNAL ClockBlock_WCO : bit;
+    SIGNAL Net_10 : bit;
+    SIGNAL Net_11 : bit;
     SIGNAL Pin_1(0)__PA : bit;
+    SIGNAL \UART_1:Net_1172\ : bit;
+    SIGNAL \UART_1:Net_161\ : bit;
+    SIGNAL \UART_1:Net_847_ff0\ : bit;
+    ATTRIBUTE global_signal OF \UART_1:Net_847_ff0\ : SIGNAL IS true;
+    SIGNAL \UART_1:intr_wire\ : bit;
+    SIGNAL \UART_1:rts_wire\ : bit;
+    SIGNAL \\\UART_1:rx(0)\\__PA\ : bit;
+    SIGNAL \\\UART_1:tx(0)\\__PA\ : bit;
+    SIGNAL \UART_1:tx_wire\ : bit;
     SIGNAL __ONE__ : bit;
     ATTRIBUTE POWER OF __ONE__ : SIGNAL IS true;
     SIGNAL __ZERO__ : bit;
@@ -60,6 +75,11 @@ ARCHITECTURE __DEFAULT__ OF Design01 IS
     ATTRIBUTE Location OF CY_CPUSS_SWJ_SWDIO_TMS(0) : LABEL IS "P6[6]";
     ATTRIBUTE lib_model OF Pin_1(0) : LABEL IS "iocell3";
     ATTRIBUTE Location OF Pin_1(0) : LABEL IS "P0[3]";
+    ATTRIBUTE lib_model OF \UART_1:tx(0)\ : LABEL IS "iocell4";
+    ATTRIBUTE lib_model OF \UART_1:rx(0)\ : LABEL IS "iocell5";
+    ATTRIBUTE lib_model OF BOUTON(0) : LABEL IS "iocell6";
+    ATTRIBUTE Location OF BOUTON(0) : LABEL IS "P0[4]";
+    ATTRIBUTE lib_model OF __ONE__ : LABEL IS "macrocell1";
     COMPONENT CLK_GEN
         PORT (
             gen_clk_in_0 : IN std_ulogic;
@@ -356,6 +376,11 @@ ARCHITECTURE __DEFAULT__ OF Design01 IS
             trace_data_3 : OUT std_ulogic;
             clock_trace_in : IN std_ulogic);
     END COMPONENT;
+    COMPONENT interrupt
+        PORT (
+            interrupt : IN std_ulogic;
+            clock : IN std_ulogic);
+    END COMPONENT;
     COMPONENT iocell
         PORT (
             oe : IN std_ulogic;
@@ -384,6 +409,81 @@ ARCHITECTURE __DEFAULT__ OF Design01 IS
             out_clock_en : IN std_ulogic;
             out_reset : IN std_ulogic);
     END COMPONENT;
+    COMPONENT macrocell
+        PORT (
+            main_0 : IN std_ulogic;
+            main_1 : IN std_ulogic;
+            main_2 : IN std_ulogic;
+            main_3 : IN std_ulogic;
+            main_4 : IN std_ulogic;
+            main_5 : IN std_ulogic;
+            main_6 : IN std_ulogic;
+            main_7 : IN std_ulogic;
+            main_8 : IN std_ulogic;
+            main_9 : IN std_ulogic;
+            main_10 : IN std_ulogic;
+            main_11 : IN std_ulogic;
+            ar_0 : IN std_ulogic;
+            ap_0 : IN std_ulogic;
+            clock_0 : IN std_ulogic;
+            clk_en : IN std_ulogic;
+            cin : IN std_ulogic;
+            cpt0_0 : IN std_ulogic;
+            cpt0_1 : IN std_ulogic;
+            cpt0_2 : IN std_ulogic;
+            cpt0_3 : IN std_ulogic;
+            cpt0_4 : IN std_ulogic;
+            cpt0_5 : IN std_ulogic;
+            cpt0_6 : IN std_ulogic;
+            cpt0_7 : IN std_ulogic;
+            cpt0_8 : IN std_ulogic;
+            cpt0_9 : IN std_ulogic;
+            cpt0_10 : IN std_ulogic;
+            cpt0_11 : IN std_ulogic;
+            cpt1_0 : IN std_ulogic;
+            cpt1_1 : IN std_ulogic;
+            cpt1_2 : IN std_ulogic;
+            cpt1_3 : IN std_ulogic;
+            cpt1_4 : IN std_ulogic;
+            cpt1_5 : IN std_ulogic;
+            cpt1_6 : IN std_ulogic;
+            cpt1_7 : IN std_ulogic;
+            cpt1_8 : IN std_ulogic;
+            cpt1_9 : IN std_ulogic;
+            cpt1_10 : IN std_ulogic;
+            cpt1_11 : IN std_ulogic;
+            cout : OUT std_ulogic;
+            q : OUT std_ulogic;
+            q_fixed : OUT std_ulogic);
+    END COMPONENT;
+    ATTRIBUTE udb_clk OF macrocell : COMPONENT IS "clock_0";
+    ATTRIBUTE udb_clken OF macrocell : COMPONENT IS "clk_en";
+    ATTRIBUTE udb_reset OF macrocell : COMPONENT IS "ar_0";
+    ATTRIBUTE udb_preset OF macrocell : COMPONENT IS "ap_0";
+    ATTRIBUTE udb_chain OF macrocell : COMPONENT IS "cin,cout";
+    ATTRIBUTE chain_lsb OF macrocell : COMPONENT IS "cin";
+    ATTRIBUTE chain_msb OF macrocell : COMPONENT IS "cout";
+    COMPONENT SCB
+        PORT (
+            clock : IN std_ulogic;
+            uart_rx : IN std_ulogic;
+            uart_tx : OUT std_ulogic;
+            uart_rts : OUT std_ulogic;
+            uart_cts : OUT std_ulogic;
+            i2c_scl : IN std_ulogic;
+            i2c_sda : IN std_ulogic;
+            spi_clk : OUT std_ulogic;
+            spi_select_0 : OUT std_ulogic;
+            spi_select_1 : OUT std_ulogic;
+            spi_select_2 : OUT std_ulogic;
+            spi_select_3 : OUT std_ulogic;
+            spi_mosi : OUT std_ulogic;
+            spi_miso : OUT std_ulogic;
+            interrupt : OUT std_ulogic;
+            tr_tx_req : OUT std_ulogic;
+            tr_rx_req : OUT std_ulogic;
+            tr_i2c_scl_filtered : OUT std_ulogic);
+    END COMPONENT;
 BEGIN
 
     ClockGenBlock:CLK_GEN;
@@ -407,6 +507,7 @@ BEGIN
             ilo => ClockBlock_ILO,
             wco => ClockBlock_WCO,
             lfclk => ClockBlock_LFClk,
+            ff_div_0 => \UART_1:Net_847_ff0\,
             periclk_App => periclk_App);
 
     CPUSS:CPUSS
@@ -573,5 +674,220 @@ BEGIN
             out_clock => open,
             out_clock_en => open,
             out_reset => open);
+
+    \UART_1:tx\:logicalport
+        GENERIC MAP(
+            cy_registers => "",
+            drive_mode => "110",
+            drive_strength => "0",
+            hotswap_needed => "0",
+            i2c_mode => "0",
+            ibuf_enabled => "0",
+            id => "839f0402-c5b5-4b9a-9e4b-2b154083b364/65f3af6c-759b-4ccb-8c66-5c95ba1f5f4f",
+            init_dr_st => "1",
+            input_sync => "0",
+            intr_mode => "00",
+            io_voltage => "",
+            max_frequency => "100",
+            oe_conn => "0",
+            oe_sync => "0",
+            output_conn => "1",
+            output_current_cap => "8",
+            output_sync => "0",
+            pin_aliases => "",
+            pin_mode => "B",
+            sio_grp_cnt => 0,
+            slew_rate => "0",
+            use_annotation => "0",
+            vtrip => "00",
+            width => 1,
+            in_clk_inv => 0,
+            in_clken_inv => 0,
+            in_clken_mode => 1,
+            in_rst_inv => 0,
+            out_clk_inv => 0,
+            out_clken_inv => 0,
+            out_clken_mode => 1,
+            out_rst_inv => 0);
+
+    \UART_1:tx(0)\:iocell
+        GENERIC MAP(
+            in_sync_mode => 0,
+            out_sync_mode => 0,
+            oe_sync_mode => 0,
+            logicalport => "\UART_1:tx\",
+            logicalport_pin_id => 0,
+            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000001")
+        PORT MAP(
+            pa_out => \\\UART_1:tx(0)\\__PA\,
+            oe => open,
+            pin_input => \UART_1:tx_wire\,
+            pad_out => \UART_1:tx(0)_PAD\,
+            pad_in => \UART_1:tx(0)_PAD\,
+            in_clock => open,
+            in_clock_en => open,
+            in_reset => open,
+            out_clock => open,
+            out_clock_en => open,
+            out_reset => open);
+
+    \UART_1:rx\:logicalport
+        GENERIC MAP(
+            cy_registers => "",
+            drive_mode => "000",
+            drive_strength => "0",
+            hotswap_needed => "0",
+            i2c_mode => "0",
+            ibuf_enabled => "1",
+            id => "839f0402-c5b5-4b9a-9e4b-2b154083b364/b7e8018e-1ef7-49c0-b5a5-61641a03e31c",
+            init_dr_st => "1",
+            input_sync => "0",
+            intr_mode => "00",
+            io_voltage => "",
+            max_frequency => "100",
+            oe_conn => "0",
+            oe_sync => "0",
+            output_conn => "0",
+            output_current_cap => "8",
+            output_sync => "0",
+            pin_aliases => "",
+            pin_mode => "B",
+            sio_grp_cnt => 0,
+            slew_rate => "0",
+            use_annotation => "0",
+            vtrip => "00",
+            width => 1,
+            in_clk_inv => 0,
+            in_clken_inv => 0,
+            in_clken_mode => 1,
+            in_rst_inv => 0,
+            out_clk_inv => 0,
+            out_clken_inv => 0,
+            out_clken_mode => 1,
+            out_rst_inv => 0);
+
+    \UART_1:rx(0)\:iocell
+        GENERIC MAP(
+            in_sync_mode => 0,
+            out_sync_mode => 0,
+            oe_sync_mode => 0,
+            logicalport => "\UART_1:rx\",
+            logicalport_pin_id => 0,
+            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000001")
+        PORT MAP(
+            pa_out => \\\UART_1:rx(0)\\__PA\,
+            oe => open,
+            fb => \UART_1:Net_1172\,
+            pad_in => \UART_1:rx(0)_PAD\,
+            in_clock => open,
+            in_clock_en => open,
+            in_reset => open,
+            out_clock => open,
+            out_clock_en => open,
+            out_reset => open);
+
+    BOUTON:logicalport
+        GENERIC MAP(
+            cy_registers => "",
+            drive_mode => "011",
+            drive_strength => "0",
+            hotswap_needed => "0",
+            i2c_mode => "0",
+            ibuf_enabled => "1",
+            id => "4cca878b-77b5-471d-8aeb-ad6925202455",
+            init_dr_st => "0",
+            input_sync => "0",
+            intr_mode => "11",
+            io_voltage => "",
+            max_frequency => "100",
+            oe_conn => "0",
+            oe_sync => "0",
+            output_conn => "0",
+            output_current_cap => "8",
+            output_sync => "0",
+            pin_aliases => "",
+            pin_mode => "B",
+            sio_grp_cnt => 0,
+            slew_rate => "0",
+            use_annotation => "0",
+            vtrip => "00",
+            width => 1,
+            in_clk_inv => 0,
+            in_clken_inv => 0,
+            in_clken_mode => 1,
+            in_rst_inv => 0,
+            out_clk_inv => 0,
+            out_clken_inv => 0,
+            out_clken_mode => 1,
+            out_rst_inv => 0);
+
+    BOUTON(0):iocell
+        GENERIC MAP(
+            in_sync_mode => 0,
+            out_sync_mode => 0,
+            oe_sync_mode => 0,
+            logicalport => "BOUTON",
+            logicalport_pin_id => 0,
+            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000001")
+        PORT MAP(
+            pa_out => BOUTON(0)__PA,
+            oe => open,
+            pad_in => BOUTON(0)_PAD,
+            in_clock => open,
+            in_clock_en => open,
+            in_reset => open,
+            out_clock => open,
+            out_clock_en => open,
+            out_reset => open);
+
+    \UART_1:SCB_IRQ\:interrupt
+        GENERIC MAP(
+            cy_registers => "",
+            deepsleep_required => 0,
+            int_type => "10")
+        PORT MAP(
+            interrupt => \UART_1:intr_wire\,
+            clock => ClockBlock_PeriClk);
+
+    \UART_1:SCB\:SCB
+        GENERIC MAP(
+            cy_registers => "",
+            master => 0,
+            mode => 2,
+            requires_io_preconfigure => 0)
+        PORT MAP(
+            clock => \UART_1:Net_847_ff0\,
+            uart_rx => \UART_1:Net_1172\,
+            uart_tx => \UART_1:tx_wire\,
+            uart_rts => \UART_1:rts_wire\,
+            uart_cts => open,
+            spi_clk => open,
+            spi_select_3 => open,
+            spi_select_2 => open,
+            spi_select_1 => open,
+            spi_select_0 => open,
+            spi_mosi => open,
+            spi_miso => open,
+            interrupt => \UART_1:intr_wire\,
+            tr_tx_req => Net_11,
+            tr_rx_req => Net_10,
+            tr_i2c_scl_filtered => \UART_1:Net_161\);
+
+    bouton_isr:interrupt
+        GENERIC MAP(
+            cy_registers => "",
+            deepsleep_required => 0,
+            int_type => "10")
+        PORT MAP(
+            interrupt => __ONE__,
+            clock => ClockBlock_PeriClk);
+
+    __ONE__:macrocell
+        GENERIC MAP(
+            eqn_main => "1'b0",
+            regmode => 0,
+            clken_mode => 1)
+        PORT MAP(
+            q => __ONE__);
 
 END __DEFAULT__;

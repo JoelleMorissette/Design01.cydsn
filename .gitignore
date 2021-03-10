@@ -22,6 +22,12 @@
 *.la
 *.lo
 
+build/Release
+codegentemp
+Generated_Source
+CortexM4
+CortexM0P
+
 # Shared objects (inc. Windows DLLs)
 *.dll
 *.so

@@ -26,14 +26,39 @@ void vInverseLED(){
         Cy_GPIO_Write(Pin_1_0_PORT,Pin_1_0_NUM,1);
     }
 }
+ volatile SemaphoreHandle_t bouton_semph;
+
+void isr_bouton(void){
+    xSemaphoreGiveFromISR(bouton_semph,NULL);
+    Cy_GPIO_ClearInterrupt(BOUTON_0_PORT, BOUTON_0_NUM);
+    NVIC_ClearPendingIRQ(bouton_isr_cfg.intrSrc);
+}
+
+void bouton_task(){
+    for(;;){
+        xSemaphoreTake(bouton_semph,0);
+        UART_1_PutString("Bouton appuye");
+        vTaskDelay(pdMS_TO_TICKS(20));
+        UART_1_PutString("Bouton relache");
+    }
+}
 
 int main(void)
-{
+{  
+//    volatile SemaphoreHandle_t bouton_semph;    
+    UART_1_Start();
+    bouton_semph = xSemaphoreCreateBinary();
+    
+    Cy_SysInt_Init(&bouton_isr_cfg,isr_bouton);
+    NVIC_ClearPendingIRQ(bouton_isr_cfg.intrSrc);
+    NVIC_EnableIRQ(bouton_isr_cfg.intrSrc);
+    
    
-    __enable_irq(); /* Enable global interrupts. */
-  
-    xTaskCreate(vInverseLED, "red",80,NULL,3,NULL);
-        
+     __enable_irq(); /* Enable global interrupts. */
+    
+   
+    xTaskCreate(vInverseLED, "red",80,NULL,2,NULL);
+    xTaskCreate(bouton_task, "Etat du bouton", 80,NULL, 3, NULL);
     
     vTaskStartScheduler();
 

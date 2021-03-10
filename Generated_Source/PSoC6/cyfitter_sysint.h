@@ -18,4 +18,20 @@
 #define INCLUDED_CYFITTER_SYSINT_H
 #include "cy_device_headers.h"
 
+/* bouton_isr */
+#define bouton_isr__INTC_CORTEXM4_ASSIGNED 1
+#define bouton_isr__INTC_CORTEXM4_PRIORITY 7u
+#define bouton_isr__INTC_NUMBER 122u
+#define bouton_isr_INTC_CORTEXM4_ASSIGNED 1
+#define bouton_isr_INTC_CORTEXM4_PRIORITY 7u
+#define bouton_isr_INTC_NUMBER 122u
+
+/* UART_1_SCB_IRQ */
+#define UART_1_SCB_IRQ__INTC_CORTEXM4_ASSIGNED 1
+#define UART_1_SCB_IRQ__INTC_CORTEXM4_PRIORITY 7u
+#define UART_1_SCB_IRQ__INTC_NUMBER 42u
+#define UART_1_SCB_IRQ_INTC_CORTEXM4_ASSIGNED 1
+#define UART_1_SCB_IRQ_INTC_CORTEXM4_PRIORITY 7u
+#define UART_1_SCB_IRQ_INTC_NUMBER 42u
+
 #endif /* INCLUDED_CYFITTER_SYSINT_H */
