@@ -42,11 +42,27 @@ void isr_bouton(void){
 void bouton_task(){
     for(;;){
         xSemaphoreTake(bouton_semph,0) ;
-        if( xSemaphoreTake(bouton_semph,0)== true){
+        if( xSemaphoreTake(bouton_semph,0)== 1){
             UART_1_PutString("\r" "Bouton appuye" "\n");
             vTaskDelay(pdMS_TO_TICKS(20));
             UART_1_PutString("\r" "Bouton relache" "\n");
         }           
+    }
+}
+
+task_params_t task_A = {
+    .delay = 1000,
+    .message = "Tache A en cours\n\r"
+};
+
+task_params_t task_B = {
+    .delay = 999,
+    .message = "Tache B en cours\n\r"
+};
+
+void print_loop(void * params){
+    for(;;){
+        UART_1_PutString(params);
     }
 }
 
@@ -69,7 +85,10 @@ int main(void)
    // Creation de taches
     
 //    xTaskCreate(vInverseLED, "red",80,NULL,2,NULL);
-   xTaskCreate(bouton_task, "Etat du bouton", 80,NULL, 3, NULL);
+    xTaskCreate(bouton_task, "Etat du bouton", 80,NULL, 1, NULL);
+    xTaskCreate(print_loop,"task A", configMINIMAL_STACK_SIZE,(void *)&task_A.message, 2, NULL);
+    xTaskCreate(print_loop,"task_B", configMINIMAL_STACK_SIZE,(void *)&task_B.message, 2, NULL);
+        
 //    
     vTaskStartScheduler();
 
