@@ -1,5 +1,5 @@
 # Design01
-# 2021-03-10 22:28:34Z
+# 2021-03-13 15:10:10Z
 
 dont_use_location p4usbcell -1 -1 0
 dont_use_location USB -1 -1 0
@@ -15,5 +15,5 @@ set_io "\UART_1:rx(0)\" iocell 10 0
 set_io "BOUTON(0)" iocell 0 4
 set_location "\UART_1:SCB_IRQ\" interrupt -1 -1 42
 set_location "\UART_1:SCB\" SCB -1 -1 1
-set_location "bouton_isr" interrupt -1 -1 122
-set_location "__ONE__" 1 0 0 0
+set_location "bouton_isr" interrupt -1 -1 0
+set_location "IOSS" IOSS -1 -1 0

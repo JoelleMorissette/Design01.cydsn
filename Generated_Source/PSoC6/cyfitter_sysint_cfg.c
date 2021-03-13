@@ -20,12 +20,6 @@
 /* ARM CM4 */
 #if (((__CORTEX_M == 4) && (CY_CORE_ID == 0)))
 
-    /* UART_1_SCB_IRQ */
-    const cy_stc_sysint_t UART_1_SCB_IRQ_cfg = {
-        .intrSrc = (IRQn_Type)UART_1_SCB_IRQ__INTC_NUMBER,
-        .intrPriority = UART_1_SCB_IRQ__INTC_CORTEXM4_PRIORITY
-    };
-
     /* bouton_isr */
     const cy_stc_sysint_t bouton_isr_cfg = {
         .intrSrc = (IRQn_Type)bouton_isr__INTC_NUMBER,
@@ -33,4 +27,16 @@
     };
 
 #endif /* ((__CORTEX_M == 4) && (CY_CORE_ID == 0)) */
+
+/* ARM CM0+ */
+#if (((__CORTEX_M == 0) && (CY_CORE_ID == 0)))
+
+    /* UART_1_SCB_IRQ */
+    const cy_stc_sysint_t UART_1_SCB_IRQ_cfg = {
+        .intrSrc = (IRQn_Type)UART_1_SCB_IRQ__INTC_CORTEXM0P_MUX,
+        .cm0pSrc = (cy_en_intr_t)UART_1_SCB_IRQ__INTC_NUMBER,
+        .intrPriority = UART_1_SCB_IRQ__INTC_CORTEXM0P_PRIORITY
+    };
+
+#endif /* ((__CORTEX_M == 0) && (CY_CORE_ID == 0)) */
 

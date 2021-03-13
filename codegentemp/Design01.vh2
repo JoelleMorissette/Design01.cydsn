@@ -2,7 +2,7 @@
 --	Conversion of Design01.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Wed Mar 10 17:28:25 2021
+--	Sat Mar 13 10:10:03 2021
 --
 
 USE cypress.cypress.all;
@@ -42,17 +42,18 @@ SIGNAL \UART_1:Net_155_1\ : bit;
 SIGNAL \UART_1:Net_155_0\ : bit;
 SIGNAL \UART_1:Net_156\ : bit;
 SIGNAL \UART_1:Net_157\ : bit;
-SIGNAL Net_11 : bit;
-SIGNAL Net_10 : bit;
+SIGNAL Net_24 : bit;
+SIGNAL Net_23 : bit;
 SIGNAL \UART_1:Net_161\ : bit;
-SIGNAL Net_8 : bit;
-SIGNAL Net_7 : bit;
-SIGNAL Net_13 : bit;
-SIGNAL Net_14 : bit;
-SIGNAL Net_6 : bit;
+SIGNAL Net_21 : bit;
+SIGNAL Net_20 : bit;
+SIGNAL Net_26 : bit;
+SIGNAL Net_27 : bit;
+SIGNAL Net_19 : bit;
 SIGNAL tmpFB_0__BOUTON_net_0 : bit;
 SIGNAL tmpIO_0__BOUTON_net_0 : bit;
 TERMINAL tmpSIOVREF__BOUTON_net_0 : bit;
+SIGNAL Net_17 : bit;
 BEGIN
 
 one <=  ('1') ;
@@ -93,7 +94,7 @@ Pin_1:cy_mxs40_gpio_v1_0
 		siovref=>(tmpSIOVREF__Pin_1_net_0));
 \UART_1:SCBCLK\:cy_clock_v1_0
 	GENERIC MAP(cy_registers=>"",
-		id=>"839f0402-c5b5-4b9a-9e4b-2b154083b364/b68e5b9d-7828-482d-a282-930f990e3b3e",
+		id=>"a64e4856-9f43-4b42-a52f-b4c02c0db532/b68e5b9d-7828-482d-a282-930f990e3b3e",
 		source_clock_id=>"",
 		divisor=>0,
 		period=>"723379629.62963",
@@ -105,7 +106,7 @@ Pin_1:cy_mxs40_gpio_v1_0
 	GENERIC MAP(cy_registers=>"",
 		width=>1,
 		sio_grp_cnt=>0,
-		id=>"839f0402-c5b5-4b9a-9e4b-2b154083b364/65f3af6c-759b-4ccb-8c66-5c95ba1f5f4f",
+		id=>"a64e4856-9f43-4b42-a52f-b4c02c0db532/65f3af6c-759b-4ccb-8c66-5c95ba1f5f4f",
 		drive_mode=>"6",
 		ibuf_enabled=>"0",
 		init_dr_st=>"1",
@@ -137,7 +138,7 @@ Pin_1:cy_mxs40_gpio_v1_0
 	GENERIC MAP(cy_registers=>"",
 		width=>1,
 		sio_grp_cnt=>0,
-		id=>"839f0402-c5b5-4b9a-9e4b-2b154083b364/b7e8018e-1ef7-49c0-b5a5-61641a03e31c",
+		id=>"a64e4856-9f43-4b42-a52f-b4c02c0db532/b7e8018e-1ef7-49c0-b5a5-61641a03e31c",
 		drive_mode=>"0",
 		ibuf_enabled=>"1",
 		init_dr_st=>"1",
@@ -192,17 +193,17 @@ Pin_1:cy_mxs40_gpio_v1_0
 		spi_mosi_s=>zero,
 		spi_miso_s=>\UART_1:Net_157\,
 		interrupt=>\UART_1:intr_wire\,
-		tr_tx_req=>Net_11,
-		tr_rx_req=>Net_10,
+		tr_tx_req=>Net_24,
+		tr_rx_req=>Net_23,
 		tr_i2c_scl_filtered=>\UART_1:Net_161\);
 BOUTON:cy_mxs40_gpio_v1_0
 	GENERIC MAP(cy_registers=>"",
 		width=>1,
 		sio_grp_cnt=>0,
 		id=>"4cca878b-77b5-471d-8aeb-ad6925202455",
-		drive_mode=>"3",
+		drive_mode=>"2",
 		ibuf_enabled=>"1",
-		init_dr_st=>"0",
+		init_dr_st=>"1",
 		input_sync=>"0",
 		intr_mode=>"3",
 		io_voltage=>"",
@@ -231,6 +232,9 @@ bouton_isr:cy_mxs40_isr_v1_0
 	GENERIC MAP(cy_registers=>"",
 		deepsleep_required=>'0',
 		int_type=>"10")
-	PORT MAP(int_signal=>one);
+	PORT MAP(int_signal=>Net_17);
+GlobalSignal_1:cy_gsref_v1_0
+	GENERIC MAP(guid=>"8C3B410E-0600-5ECF-95DD-0AF91BF8D8A7")
+	PORT MAP(sig_out=>Net_17);
 
 END R_T_L;

@@ -1,5 +1,5 @@
 -- Project:   Design01
--- Generated: 03/10/2021 17:28:33
+-- Generated: 03/13/2021 10:10:09
 -- PSoC Creator  4.4
 
 ENTITY Design01 IS
@@ -47,8 +47,9 @@ ARCHITECTURE __DEFAULT__ OF Design01 IS
     ATTRIBUTE global_signal OF ClockBlock_PeriClk : SIGNAL IS true;
     SIGNAL ClockBlock_SlowClk : bit;
     SIGNAL ClockBlock_WCO : bit;
-    SIGNAL Net_10 : bit;
-    SIGNAL Net_11 : bit;
+    SIGNAL INDIVIDUAL_PICU_OUT_0 : bit;
+    SIGNAL Net_23 : bit;
+    SIGNAL Net_24 : bit;
     SIGNAL Pin_1(0)__PA : bit;
     SIGNAL \UART_1:Net_1172\ : bit;
     SIGNAL \UART_1:Net_161\ : bit;
@@ -79,7 +80,6 @@ ARCHITECTURE __DEFAULT__ OF Design01 IS
     ATTRIBUTE lib_model OF \UART_1:rx(0)\ : LABEL IS "iocell5";
     ATTRIBUTE lib_model OF BOUTON(0) : LABEL IS "iocell6";
     ATTRIBUTE Location OF BOUTON(0) : LABEL IS "P0[4]";
-    ATTRIBUTE lib_model OF __ONE__ : LABEL IS "macrocell1";
     COMPONENT CLK_GEN
         PORT (
             gen_clk_in_0 : IN std_ulogic;
@@ -398,6 +398,26 @@ ARCHITECTURE __DEFAULT__ OF Design01 IS
             out_clock_en : IN std_ulogic;
             out_reset : IN std_ulogic);
     END COMPONENT;
+    COMPONENT IOSS
+        PORT (
+            interrupt_gpio : OUT std_ulogic;
+            interrupt_vdd : OUT std_ulogic;
+            interrupt_port_0 : OUT std_ulogic;
+            interrupt_port_1 : OUT std_ulogic;
+            interrupt_port_2 : OUT std_ulogic;
+            interrupt_port_3 : OUT std_ulogic;
+            interrupt_port_4 : OUT std_ulogic;
+            interrupt_port_5 : OUT std_ulogic;
+            interrupt_port_6 : OUT std_ulogic;
+            interrupt_port_7 : OUT std_ulogic;
+            interrupt_port_8 : OUT std_ulogic;
+            interrupt_port_9 : OUT std_ulogic;
+            interrupt_port_10 : OUT std_ulogic;
+            interrupt_port_11 : OUT std_ulogic;
+            interrupt_port_12 : OUT std_ulogic;
+            interrupt_port_13 : OUT std_ulogic;
+            interrupt_port_14 : OUT std_ulogic);
+    END COMPONENT;
     COMPONENT logicalport
         PORT (
             interrupt : OUT std_ulogic;
@@ -409,60 +429,6 @@ ARCHITECTURE __DEFAULT__ OF Design01 IS
             out_clock_en : IN std_ulogic;
             out_reset : IN std_ulogic);
     END COMPONENT;
-    COMPONENT macrocell
-        PORT (
-            main_0 : IN std_ulogic;
-            main_1 : IN std_ulogic;
-            main_2 : IN std_ulogic;
-            main_3 : IN std_ulogic;
-            main_4 : IN std_ulogic;
-            main_5 : IN std_ulogic;
-            main_6 : IN std_ulogic;
-            main_7 : IN std_ulogic;
-            main_8 : IN std_ulogic;
-            main_9 : IN std_ulogic;
-            main_10 : IN std_ulogic;
-            main_11 : IN std_ulogic;
-            ar_0 : IN std_ulogic;
-            ap_0 : IN std_ulogic;
-            clock_0 : IN std_ulogic;
-            clk_en : IN std_ulogic;
-            cin : IN std_ulogic;
-            cpt0_0 : IN std_ulogic;
-            cpt0_1 : IN std_ulogic;
-            cpt0_2 : IN std_ulogic;
-            cpt0_3 : IN std_ulogic;
-            cpt0_4 : IN std_ulogic;
-            cpt0_5 : IN std_ulogic;
-            cpt0_6 : IN std_ulogic;
-            cpt0_7 : IN std_ulogic;
-            cpt0_8 : IN std_ulogic;
-            cpt0_9 : IN std_ulogic;
-            cpt0_10 : IN std_ulogic;
-            cpt0_11 : IN std_ulogic;
-            cpt1_0 : IN std_ulogic;
-            cpt1_1 : IN std_ulogic;
-            cpt1_2 : IN std_ulogic;
-            cpt1_3 : IN std_ulogic;
-            cpt1_4 : IN std_ulogic;
-            cpt1_5 : IN std_ulogic;
-            cpt1_6 : IN std_ulogic;
-            cpt1_7 : IN std_ulogic;
-            cpt1_8 : IN std_ulogic;
-            cpt1_9 : IN std_ulogic;
-            cpt1_10 : IN std_ulogic;
-            cpt1_11 : IN std_ulogic;
-            cout : OUT std_ulogic;
-            q : OUT std_ulogic;
-            q_fixed : OUT std_ulogic);
-    END COMPONENT;
-    ATTRIBUTE udb_clk OF macrocell : COMPONENT IS "clock_0";
-    ATTRIBUTE udb_clken OF macrocell : COMPONENT IS "clk_en";
-    ATTRIBUTE udb_reset OF macrocell : COMPONENT IS "ar_0";
-    ATTRIBUTE udb_preset OF macrocell : COMPONENT IS "ap_0";
-    ATTRIBUTE udb_chain OF macrocell : COMPONENT IS "cin,cout";
-    ATTRIBUTE chain_lsb OF macrocell : COMPONENT IS "cin";
-    ATTRIBUTE chain_msb OF macrocell : COMPONENT IS "cout";
     COMPONENT SCB
         PORT (
             clock : IN std_ulogic;
@@ -683,7 +649,7 @@ BEGIN
             hotswap_needed => "0",
             i2c_mode => "0",
             ibuf_enabled => "0",
-            id => "839f0402-c5b5-4b9a-9e4b-2b154083b364/65f3af6c-759b-4ccb-8c66-5c95ba1f5f4f",
+            id => "a64e4856-9f43-4b42-a52f-b4c02c0db532/65f3af6c-759b-4ccb-8c66-5c95ba1f5f4f",
             init_dr_st => "1",
             input_sync => "0",
             intr_mode => "00",
@@ -739,7 +705,7 @@ BEGIN
             hotswap_needed => "0",
             i2c_mode => "0",
             ibuf_enabled => "1",
-            id => "839f0402-c5b5-4b9a-9e4b-2b154083b364/b7e8018e-1ef7-49c0-b5a5-61641a03e31c",
+            id => "a64e4856-9f43-4b42-a52f-b4c02c0db532/b7e8018e-1ef7-49c0-b5a5-61641a03e31c",
             init_dr_st => "1",
             input_sync => "0",
             intr_mode => "00",
@@ -789,13 +755,13 @@ BEGIN
     BOUTON:logicalport
         GENERIC MAP(
             cy_registers => "",
-            drive_mode => "011",
+            drive_mode => "010",
             drive_strength => "0",
             hotswap_needed => "0",
             i2c_mode => "0",
             ibuf_enabled => "1",
             id => "4cca878b-77b5-471d-8aeb-ad6925202455",
-            init_dr_st => "0",
+            init_dr_st => "1",
             input_sync => "0",
             intr_mode => "11",
             io_voltage => "",
@@ -869,8 +835,8 @@ BEGIN
             spi_mosi => open,
             spi_miso => open,
             interrupt => \UART_1:intr_wire\,
-            tr_tx_req => Net_11,
-            tr_rx_req => Net_10,
+            tr_tx_req => Net_24,
+            tr_rx_req => Net_23,
             tr_i2c_scl_filtered => \UART_1:Net_161\);
 
     bouton_isr:interrupt
@@ -879,15 +845,11 @@ BEGIN
             deepsleep_required => 0,
             int_type => "10")
         PORT MAP(
-            interrupt => __ONE__,
+            interrupt => INDIVIDUAL_PICU_OUT_0,
             clock => ClockBlock_PeriClk);
 
-    __ONE__:macrocell
-        GENERIC MAP(
-            eqn_main => "1'b0",
-            regmode => 0,
-            clken_mode => 1)
+    IOSS:IOSS
         PORT MAP(
-            q => __ONE__);
+            interrupt_port_0 => INDIVIDUAL_PICU_OUT_0);
 
 END __DEFAULT__;

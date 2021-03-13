@@ -1,6 +1,6 @@
 // ======================================================================
 // Design01.v generated from TopDesign.cysch
-// 03/10/2021 at 17:28
+// 03/13/2021 at 10:10
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 
@@ -196,7 +196,7 @@ module SCB_UART_PDL_v2_0_0 (
 
 
 	cy_clock_v1_0
-		#(.id("839f0402-c5b5-4b9a-9e4b-2b154083b364/b68e5b9d-7828-482d-a282-930f990e3b3e"),
+		#(.id("a64e4856-9f43-4b42-a52f-b4c02c0db532/b68e5b9d-7828-482d-a282-930f990e3b3e"),
 		  .source_clock_id(""),
 		  .divisor(0),
 		  .period("723379629.62963"),
@@ -220,7 +220,7 @@ module SCB_UART_PDL_v2_0_0 (
 	electrical [0:0] tmpSIOVREF__tx_net;
 
 	cy_mxs40_gpio_v1_0
-		#(.id("839f0402-c5b5-4b9a-9e4b-2b154083b364/65f3af6c-759b-4ccb-8c66-5c95ba1f5f4f"),
+		#(.id("a64e4856-9f43-4b42-a52f-b4c02c0db532/65f3af6c-759b-4ccb-8c66-5c95ba1f5f4f"),
 		  .width(1),
 		  .sio_grp_cnt(0),
 		  .drive_mode("6"),
@@ -255,7 +255,7 @@ module SCB_UART_PDL_v2_0_0 (
 	electrical [0:0] tmpSIOVREF__rx_net;
 
 	cy_mxs40_gpio_v1_0
-		#(.id("839f0402-c5b5-4b9a-9e4b-2b154083b364/b7e8018e-1ef7-49c0-b5a5-61641a03e31c"),
+		#(.id("a64e4856-9f43-4b42-a52f-b4c02c0db532/b7e8018e-1ef7-49c0-b5a5-61641a03e31c"),
 		  .width(1),
 		  .sio_grp_cnt(0),
 		  .drive_mode("0"),
@@ -342,17 +342,17 @@ endmodule
 // top
 module top ;
 
-          wire  Net_16;
-          wire  Net_6;
-          wire  Net_14;
-          wire  Net_11;
-          wire  Net_13;
-          wire  Net_12;
-          wire  Net_10;
-          wire  Net_7;
-          wire  Net_8;
-          wire  Net_5;
-          wire  Net_9;
+          wire  Net_19;
+          wire  Net_27;
+          wire  Net_24;
+          wire  Net_26;
+          wire  Net_25;
+          wire  Net_23;
+          wire  Net_20;
+          wire  Net_21;
+          wire  Net_18;
+          wire  Net_22;
+          wire  Net_17;
 
 	wire [0:0] tmpFB_0__Pin_1_net;
 	wire [0:0] tmpIO_0__Pin_1_net;
@@ -393,14 +393,14 @@ module top ;
     SCB_UART_PDL_v2_0_0 UART_1 (
         .clock(1'b0),
         .cts_in(1'b0),
-        .interrupt(Net_8),
-        .rts_out(Net_7),
-        .rx_dma(Net_10),
+        .interrupt(Net_21),
+        .rts_out(Net_20),
+        .rx_dma(Net_23),
         .rx_in(1'b0),
-        .rx_tx_out(Net_13),
-        .tx_dma(Net_11),
-        .tx_en_out(Net_14),
-        .tx_out(Net_6));
+        .rx_tx_out(Net_26),
+        .tx_dma(Net_24),
+        .tx_en_out(Net_27),
+        .tx_out(Net_19));
 
 	wire [0:0] tmpFB_0__BOUTON_net;
 	wire [0:0] tmpIO_0__BOUTON_net;
@@ -410,9 +410,9 @@ module top ;
 		#(.id("4cca878b-77b5-471d-8aeb-ad6925202455"),
 		  .width(1),
 		  .sio_grp_cnt(0),
-		  .drive_mode("3"),
+		  .drive_mode("2"),
 		  .ibuf_enabled("1"),
-		  .init_dr_st("0"),
+		  .init_dr_st("1"),
 		  .input_sync("0"),
 		  .intr_mode("3"),
 		  .io_voltage(""),
@@ -443,7 +443,14 @@ module top ;
 		#(.deepsleep_required(0),
 		  .int_type(2'b10))
 		bouton_isr
-		 (.int_signal(1'b1));
+		 (.int_signal(Net_17));
+
+
+
+	cy_gsref_v1_0
+		#(.guid("8C3B410E-0600-5ECF-95DD-0AF91BF8D8A7"))
+		GlobalSignal_1
+		 (.sig_out(Net_17));
 
 
 
