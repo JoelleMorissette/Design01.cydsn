@@ -1,6 +1,6 @@
 (DELAYFILE
  (SDFVERSION "IEEE 1497 4.0")
- (DATE "2021-03-13T15:10:18Z")
+ (DATE "2021-03-13T19:44:58Z")
  (DESIGN "Design01")
  (VENDOR "Cypress Semiconductor")
  (PROGRAM "PSoC Creator")
@@ -18,7 +18,7 @@
     (INTERCONNECT ClockBlock.periclk bouton_isr.clock (0.000:0.000:0.000))
     (INTERCONNECT IOSS.interrupt_port_0 bouton_isr.interrupt (0.000:0.000:0.000))
     (INTERCONNECT \\UART_1\:rx\(0\)\\.fb \\UART_1\:SCB\\.uart_rx (0.000:0.000:0.000))
-    (INTERCONNECT ClockBlock.ff_div_1 \\UART_1\:SCB\\.clock (0.000:0.000:0.000))
+    (INTERCONNECT ClockBlock.ff_div_5 \\UART_1\:SCB\\.clock (0.000:0.000:0.000))
     (INTERCONNECT \\UART_1\:SCB\\.interrupt \\UART_1\:SCB_IRQ\\.interrupt (0.000:0.000:0.000))
     (INTERCONNECT \\UART_1\:tx\(0\)\\.pad_out \\UART_1\:tx\(0\)\\.pad_in (0.000:0.000:0.000))
     (INTERCONNECT \\UART_1\:SCB\\.uart_tx \\UART_1\:tx\(0\)\\.pin_input (0.000:0.000:0.000))

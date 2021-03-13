@@ -21,8 +21,8 @@
 #include "cyfitter_sysint.h"
 
 /* UART_1_SCB */
-#define UART_1_SCB__HW SCB1
-#define UART_1_SCB__IDX 1
+#define UART_1_SCB__HW SCB5
+#define UART_1_SCB__IDX 5
 #define UART_1_SCB__SS0_POSITION 0u
 #define UART_1_SCB__SS1_POSITION 1u
 #define UART_1_SCB__SS2_POSITION 2u

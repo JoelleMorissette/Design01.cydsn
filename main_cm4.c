@@ -18,6 +18,7 @@
 #include <stdio.h>
 
 
+
 //void vInverseLED(){
 //   Cy_GPIO_Write(Pin_1_0_PORT,Pin_1_0_NUM,1);
 //    for(;;){
@@ -39,28 +40,25 @@ void isr_bouton(void){
 }
 
 void bouton_task(){
-   UART_1_PutString("Bouton relache");
-    
     for(;;){
-        if(xSemaphoreTake(bouton_semph,1) == true){
-            UART_1_PutString("Bouton appuye");
+        xSemaphoreTake(bouton_semph,0) ;
+        if( xSemaphoreTake(bouton_semph,0)== true){
+            UART_1_PutString("\r" "Bouton appuye" "\n");
             vTaskDelay(pdMS_TO_TICKS(20));
-            UART_1_PutString("Bouton relache");
+            UART_1_PutString("\r" "Bouton relache" "\n");
         }           
     }
 }
 
 int main(void)
 {  
-    UART_1_Init(&UART_1_config);
-    UART_1_Enable();
+    
     UART_1_Start(); // Demarre le module UART
     
-    UART_1_PutString("Test");
     bouton_semph = xSemaphoreCreateBinary(); // Initialisation du semaphore
    
     // Initialisation de l'isr
-    Cy_SysPm_PmicUnlock();
+    //Cy_SysPm_PmicUnlock(); // Fonction trouvee dans les recherches qui permet a l'isr de se produire 
     Cy_SysInt_Init(&bouton_isr_cfg,isr_bouton);
     NVIC_ClearPendingIRQ(bouton_isr_cfg.intrSrc);
     NVIC_EnableIRQ(bouton_isr_cfg.intrSrc);
