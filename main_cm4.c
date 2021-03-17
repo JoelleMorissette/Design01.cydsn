@@ -50,25 +50,45 @@ void bouton_task(){
     }
 }
 
+
+
 task_params_t task_A = {
     .delay = 1000,
-    .message = "Tache A en cours\n\r"
+    .message = "Tache A en cours" "\n\r"
 };
 
 task_params_t task_B = {
     .delay = 999,
-    .message = "Tache B en cours\n\r"
+    .message = "Tache B en cours" "\n\r"
 };
+
 
 void print_loop(void * params){
     for(;;){
-        UART_1_PutString(params);
+       
+        UART_1_PutString(params);     
+    }
+}
+volatile void* pointeurA = &task_A;  // Definition pointeur vers adresse de task_A
+volatile void* pointeurB = &task_B;  // Definition pointeur vers adresse de task B 
+
+void print_loopDeux(void *params){
+    for(;;){       
+        if (params == pointeurA){      // Si l'adresse pointee par params est celle de task_A
+            UART_1_PutString(task_A.message);  // On affiche le message de task_A
+            vTaskDelay(task_A.delay);  // La periode est donc du delais de la task_A 
+            
+        }
+        if (params == pointeurB){   // Meme chose, mais avec task_B 
+           UART_1_PutString(task_B.message);
+           vTaskDelay(task_B.delay); 
+        }
+       
     }
 }
 
 int main(void)
 {  
-    
     UART_1_Start(); // Demarre le module UART
     
     bouton_semph = xSemaphoreCreateBinary(); // Initialisation du semaphore
@@ -86,11 +106,10 @@ int main(void)
     
 //    xTaskCreate(vInverseLED, "red",80,NULL,2,NULL);
     xTaskCreate(bouton_task, "Etat du bouton", 80,NULL, 1, NULL);
-    xTaskCreate(print_loop,"task A", configMINIMAL_STACK_SIZE,(void *)&task_A.message, 2, NULL);
-    xTaskCreate(print_loop,"task_B", configMINIMAL_STACK_SIZE,(void *)&task_B.message, 2, NULL);
-        
-//    
+    xTaskCreate(print_loopDeux,"task A", configMINIMAL_STACK_SIZE,(void *)&task_A, 1, NULL);
+    xTaskCreate(print_loopDeux,"task_B", configMINIMAL_STACK_SIZE,(void *)&task_B, 1, NULL);
     vTaskStartScheduler();
+    
 
     /* Place your initialization/startup code here (e.g. MyInst_Start()) */
 
