@@ -17,8 +17,6 @@
 #include "queue.h"
 #include <stdio.h>
 
-
-
 //void vInverseLED(){
 //   Cy_GPIO_Write(Pin_1_0_PORT,Pin_1_0_NUM,1);
 //    for(;;){
@@ -35,63 +33,44 @@ volatile QueueHandle_t print_queue;
 volatile int nombreEntree = 0; 
 
 void isr_bouton(void){
-    //Cy_SysPm_PmicUnlock();
     nombreEntree = nombreEntree +1;
     xSemaphoreGiveFromISR(bouton_semph,NULL);
     Cy_GPIO_ClearInterrupt(BOUTON_0_PORT, BOUTON_0_NUM);
-    NVIC_ClearPendingIRQ(bouton_isr_cfg.intrSrc);
-  
-   
+    NVIC_ClearPendingIRQ(bouton_isr_cfg.intrSrc);   
 }
 
 void bouton_task(){
-    for(;;){
-        
+    for(;;){ 
         xSemaphoreTake(bouton_semph,0) ;
-        if( xSemaphoreTake(bouton_semph,0)== 1){
-            UART_1_PutString("\r" "Bouton appuye" "\n");
-            vTaskDelay(pdMS_TO_TICKS(20));
-            UART_1_PutString("\r""Bouton relache""\n");
-                  }                                         
+        vTaskDelay(pdMS_TO_TICKS(20));
+        if( xSemaphoreTake(bouton_semph,0)== true){
+            if(nombreEntree%2 !=0)    // Si le nombreEntree est impaire, alors on a un rising edge, donc un appui
+                 UART_1_PutString("\r" "Bouton appuye" "\n");
+            if(nombreEntree %2 == 0){ // Si le nombreEntree est paire, alors on a un falling edge, donc un relachement
+                UART_1_PutString("\r""Bouton relache""\n");                
+            }
+          }                                                          
     }
 }
 
-
-
 task_params_t task_A = {
     .delay = 1000,
-    .message = "Tache A en cours" "\n\r"
+    .message = "\r Tache A en cours" "\n"
 };
 
 task_params_t task_B = {
     .delay = 999,
-    .message = "Tache B en cours" "\n\r"
+    .message = "\r Tache B en cours" "\n"
 };
 
 
-void print_loop(void* params){
-    for(;;){
-        int delais =0;
-        char *message = NULL;
-        if(params == &task_A){
-            message = task_A.message;
-            delais = task_A.delay;
-        }
-        if(params == &task_B){
-            message = task_B.message;
-            delais = task_B.delay;
-        }
-        vTaskDelay(delais);
-        xQueueSend(print_queue, &message, delais);
-    }
-}
-
-void print_loopDeux(void *params){
+void print_loop(void *params){
     for(;;){    
         task_params_t* paramTemporaire = (task_params_t*)params;
         vTaskDelay(pdMS_TO_TICKS(paramTemporaire->delay));
-        UART_1_PutString(paramTemporaire->message);
-            
+        char *message = paramTemporaire->message;
+        int delais = paramTemporaire->delay;
+        xQueueSend(print_queue, (&message),delais );    
     }
 }
 
@@ -122,11 +101,7 @@ int main(void)
    // Creation de taches
     
 //    xTaskCreate(vInverseLED, "red",80,NULL,2,NULL);
-   xTaskCreate(bouton_task, "Etat du bouton", 80,NULL, 1, NULL);
-//   xTaskCreate(print_loopDeux,"task A", configMINIMAL_STACK_SIZE,(void *)&task_A, 1, NULL);
-//   xTaskCreate(print_loopDeux,"task_B", configMINIMAL_STACK_SIZE,(void *)&task_B, 1, NULL);
- 
-    // Essai    
+    xTaskCreate(bouton_task, "Etat du bouton", 80,NULL, 3, NULL);
     xTaskCreate(print_loop,"task A", configMINIMAL_STACK_SIZE, (void*)&task_A, 1, NULL);
     xTaskCreate(print_loop,"task_B", configMINIMAL_STACK_SIZE,(void *)&task_B, 1, NULL);
     xTaskCreate(print , "Task_print", configMINIMAL_STACK_SIZE, NULL, 2, NULL);
