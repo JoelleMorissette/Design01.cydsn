@@ -9,6 +9,12 @@
  *
  * ========================================
 */
+
+/* Travail de:
+Myriane Gauthier
+Valérie Gauvin
+Joëlle Morissette
+*/
 #include "project.h"
 #include "FreeRTOS.h"
 #include "task.h"
@@ -17,16 +23,15 @@
 #include "queue.h"
 #include <stdio.h>
 
-//void vInverseLED(){
-//   Cy_GPIO_Write(Pin_1_0_PORT,Pin_1_0_NUM,1);
-//    for(;;){
-//        vTaskDelay(pdMS_TO_TICKS(500));
-////     Cy_GPIO_Write(Pin_1_0_PORT,Pin_1_0_NUM, ~(Cy_GPIO_Read(Pin_1_0_PORT, Pin_1_0_NUM)));
-//         Cy_GPIO_Write(Pin_1_0_PORT,Pin_1_0_NUM,0);
-//         vTaskDelay(pdMS_TO_TICKS(500));
-//        Cy_GPIO_Write(Pin_1_0_PORT,Pin_1_0_NUM,1);
-//    }
-//}
+void vInverseLED(){
+   Cy_GPIO_Write(Pin_1_0_PORT,Pin_1_0_NUM,0);
+    for(;;){
+        vTaskDelay(pdMS_TO_TICKS(500));
+         Cy_GPIO_Write(Pin_1_0_PORT,Pin_1_0_NUM,0);
+         vTaskDelay(pdMS_TO_TICKS(500));
+        Cy_GPIO_Write(Pin_1_0_PORT,Pin_1_0_NUM,1);
+    }
+}
 
 volatile SemaphoreHandle_t bouton_semph;
 volatile QueueHandle_t print_queue;
@@ -100,11 +105,11 @@ int main(void)
     
    // Creation de taches
     
-//    xTaskCreate(vInverseLED, "red",80,NULL,2,NULL);
-    xTaskCreate(bouton_task, "Etat du bouton", 80,NULL, 3, NULL);
+    xTaskCreate(vInverseLED, "red",80,NULL,1,NULL);
+    xTaskCreate(bouton_task, "Etat du bouton", 80,NULL, 1, NULL);
     xTaskCreate(print_loop,"task A", configMINIMAL_STACK_SIZE, (void*)&task_A, 1, NULL);
     xTaskCreate(print_loop,"task_B", configMINIMAL_STACK_SIZE,(void *)&task_B, 1, NULL);
-    xTaskCreate(print , "Task_print", configMINIMAL_STACK_SIZE, NULL, 2, NULL);
+    xTaskCreate(print , "Task_print", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
 
     vTaskStartScheduler();
     
